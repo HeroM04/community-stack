@@ -16,6 +16,11 @@ import { Route as PostsRouteImport } from './routes/posts'
 import { Route as GocTamLinhRouteImport } from './routes/goc-tam-linh'
 import { Route as DeThiRouteImport } from './routes/de-thi'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TaiLieuIdRouteImport } from './routes/tai-lieu.$id'
+import { Route as ReviewMonHocIdRouteImport } from './routes/review-mon-hoc.$id'
+import { Route as ReviewGiangVienIdRouteImport } from './routes/review-giang-vien.$id'
+import { Route as PostsIdRouteImport } from './routes/posts.$id'
+import { Route as DeThiIdRouteImport } from './routes/de-thi.$id'
 
 const TaiLieuRoute = TaiLieuRouteImport.update({
   id: '/tai-lieu',
@@ -52,34 +57,74 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TaiLieuIdRoute = TaiLieuIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TaiLieuRoute,
+} as any)
+const ReviewMonHocIdRoute = ReviewMonHocIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ReviewMonHocRoute,
+} as any)
+const ReviewGiangVienIdRoute = ReviewGiangVienIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ReviewGiangVienRoute,
+} as any)
+const PostsIdRoute = PostsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PostsRoute,
+} as any)
+const DeThiIdRoute = DeThiIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DeThiRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/de-thi': typeof DeThiRoute
+  '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
-  '/posts': typeof PostsRoute
-  '/review-giang-vien': typeof ReviewGiangVienRoute
-  '/review-mon-hoc': typeof ReviewMonHocRoute
-  '/tai-lieu': typeof TaiLieuRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
+  '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
+  '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/de-thi/$id': typeof DeThiIdRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/tai-lieu/$id': typeof TaiLieuIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/de-thi': typeof DeThiRoute
+  '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
-  '/posts': typeof PostsRoute
-  '/review-giang-vien': typeof ReviewGiangVienRoute
-  '/review-mon-hoc': typeof ReviewMonHocRoute
-  '/tai-lieu': typeof TaiLieuRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
+  '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
+  '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/de-thi/$id': typeof DeThiIdRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/tai-lieu/$id': typeof TaiLieuIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/de-thi': typeof DeThiRoute
+  '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
-  '/posts': typeof PostsRoute
-  '/review-giang-vien': typeof ReviewGiangVienRoute
-  '/review-mon-hoc': typeof ReviewMonHocRoute
-  '/tai-lieu': typeof TaiLieuRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
+  '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
+  '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/de-thi/$id': typeof DeThiIdRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/tai-lieu/$id': typeof TaiLieuIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +136,11 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/de-thi/$id'
+    | '/posts/$id'
+    | '/review-giang-vien/$id'
+    | '/review-mon-hoc/$id'
+    | '/tai-lieu/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +150,11 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/de-thi/$id'
+    | '/posts/$id'
+    | '/review-giang-vien/$id'
+    | '/review-mon-hoc/$id'
+    | '/tai-lieu/$id'
   id:
     | '__root__'
     | '/'
@@ -109,16 +164,21 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/de-thi/$id'
+    | '/posts/$id'
+    | '/review-giang-vien/$id'
+    | '/review-mon-hoc/$id'
+    | '/tai-lieu/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DeThiRoute: typeof DeThiRoute
+  DeThiRoute: typeof DeThiRouteWithChildren
   GocTamLinhRoute: typeof GocTamLinhRoute
-  PostsRoute: typeof PostsRoute
-  ReviewGiangVienRoute: typeof ReviewGiangVienRoute
-  ReviewMonHocRoute: typeof ReviewMonHocRoute
-  TaiLieuRoute: typeof TaiLieuRoute
+  PostsRoute: typeof PostsRouteWithChildren
+  ReviewGiangVienRoute: typeof ReviewGiangVienRouteWithChildren
+  ReviewMonHocRoute: typeof ReviewMonHocRouteWithChildren
+  TaiLieuRoute: typeof TaiLieuRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -172,17 +232,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tai-lieu/$id': {
+      id: '/tai-lieu/$id'
+      path: '/$id'
+      fullPath: '/tai-lieu/$id'
+      preLoaderRoute: typeof TaiLieuIdRouteImport
+      parentRoute: typeof TaiLieuRoute
+    }
+    '/review-mon-hoc/$id': {
+      id: '/review-mon-hoc/$id'
+      path: '/$id'
+      fullPath: '/review-mon-hoc/$id'
+      preLoaderRoute: typeof ReviewMonHocIdRouteImport
+      parentRoute: typeof ReviewMonHocRoute
+    }
+    '/review-giang-vien/$id': {
+      id: '/review-giang-vien/$id'
+      path: '/$id'
+      fullPath: '/review-giang-vien/$id'
+      preLoaderRoute: typeof ReviewGiangVienIdRouteImport
+      parentRoute: typeof ReviewGiangVienRoute
+    }
+    '/posts/$id': {
+      id: '/posts/$id'
+      path: '/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdRouteImport
+      parentRoute: typeof PostsRoute
+    }
+    '/de-thi/$id': {
+      id: '/de-thi/$id'
+      path: '/$id'
+      fullPath: '/de-thi/$id'
+      preLoaderRoute: typeof DeThiIdRouteImport
+      parentRoute: typeof DeThiRoute
+    }
   }
 }
 
+interface DeThiRouteChildren {
+  DeThiIdRoute: typeof DeThiIdRoute
+}
+
+const DeThiRouteChildren: DeThiRouteChildren = {
+  DeThiIdRoute: DeThiIdRoute,
+}
+
+const DeThiRouteWithChildren = DeThiRoute._addFileChildren(DeThiRouteChildren)
+
+interface PostsRouteChildren {
+  PostsIdRoute: typeof PostsIdRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsIdRoute: PostsIdRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+
+interface ReviewGiangVienRouteChildren {
+  ReviewGiangVienIdRoute: typeof ReviewGiangVienIdRoute
+}
+
+const ReviewGiangVienRouteChildren: ReviewGiangVienRouteChildren = {
+  ReviewGiangVienIdRoute: ReviewGiangVienIdRoute,
+}
+
+const ReviewGiangVienRouteWithChildren = ReviewGiangVienRoute._addFileChildren(
+  ReviewGiangVienRouteChildren,
+)
+
+interface ReviewMonHocRouteChildren {
+  ReviewMonHocIdRoute: typeof ReviewMonHocIdRoute
+}
+
+const ReviewMonHocRouteChildren: ReviewMonHocRouteChildren = {
+  ReviewMonHocIdRoute: ReviewMonHocIdRoute,
+}
+
+const ReviewMonHocRouteWithChildren = ReviewMonHocRoute._addFileChildren(
+  ReviewMonHocRouteChildren,
+)
+
+interface TaiLieuRouteChildren {
+  TaiLieuIdRoute: typeof TaiLieuIdRoute
+}
+
+const TaiLieuRouteChildren: TaiLieuRouteChildren = {
+  TaiLieuIdRoute: TaiLieuIdRoute,
+}
+
+const TaiLieuRouteWithChildren =
+  TaiLieuRoute._addFileChildren(TaiLieuRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DeThiRoute: DeThiRoute,
+  DeThiRoute: DeThiRouteWithChildren,
   GocTamLinhRoute: GocTamLinhRoute,
-  PostsRoute: PostsRoute,
-  ReviewGiangVienRoute: ReviewGiangVienRoute,
-  ReviewMonHocRoute: ReviewMonHocRoute,
-  TaiLieuRoute: TaiLieuRoute,
+  PostsRoute: PostsRouteWithChildren,
+  ReviewGiangVienRoute: ReviewGiangVienRouteWithChildren,
+  ReviewMonHocRoute: ReviewMonHocRouteWithChildren,
+  TaiLieuRoute: TaiLieuRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
