@@ -24,10 +24,12 @@ export function LeftSidebar() {
       <nav className="py-4 pr-2 text-[13px]">
         {nav.map(item => {
           const active = pathname === item.to;
+          const Cmp: any = item.to === "#" ? "a" : Link;
+          const props: any = item.to === "#" ? { href: "#" } : { to: item.to };
           return (
-            <Link
-              key={item.to}
-              to={item.to}
+            <Cmp
+              key={item.label}
+              {...props}
               className={`flex items-center gap-2 px-3 py-2 my-0.5 rounded-r-full ${
                 active
                   ? "bg-accent font-semibold border-r-[3px] border-primary text-primary"
@@ -36,7 +38,7 @@ export function LeftSidebar() {
             >
               <item.icon className={`h-4 w-4 ${active ? "text-primary" : "text-muted-foreground"}`} />
               {item.label}
-            </Link>
+            </Cmp>
           );
         })}
 
