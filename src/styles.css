@@ -34,48 +34,53 @@
   --color-tag-foreground: var(--tag-foreground);
   --color-success: var(--success);
   --color-warning: var(--warning);
+  --color-brand-red: var(--brand-red);
+  --color-brand-blue: var(--brand-blue);
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.375rem;
+  --radius: 0.75rem;
 
-  /* Stack Overflow inspired palette */
-  --background: oklch(0.985 0.003 95);          /* warm off-white #f8f9f9 */
-  --foreground: oklch(0.27 0.01 250);           /* near black */
-  --surface: oklch(1 0 0);                       /* white card */
-  --surface-hover: oklch(0.97 0.005 95);
+  /* APD-inspired palette: white / blue / red */
+  --background: oklch(0.99 0.005 240);          /* near white */
+  --foreground: oklch(0.22 0.04 250);
+  --surface: oklch(1 0 0);
+  --surface-hover: oklch(0.97 0.01 240);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.27 0.01 250);
+  --card-foreground: oklch(0.22 0.04 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.27 0.01 250);
+  --popover-foreground: oklch(0.22 0.04 250);
 
-  --primary: oklch(0.72 0.17 50);                /* SO orange #f48024 */
+  /* Primary = APD blue */
+  --brand-blue: oklch(0.48 0.18 255);
+  --brand-red: oklch(0.58 0.22 27);
+  --primary: oklch(0.48 0.18 255);
   --primary-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.95 0.01 240);
-  --secondary-foreground: oklch(0.3 0.02 250);
+  --secondary: oklch(0.96 0.015 250);
+  --secondary-foreground: oklch(0.3 0.05 255);
 
-  --muted: oklch(0.96 0.005 95);
-  --muted-foreground: oklch(0.5 0.015 250);
+  --muted: oklch(0.965 0.008 240);
+  --muted-foreground: oklch(0.5 0.02 250);
 
-  --accent: oklch(0.92 0.04 230);                /* soft blue tint */
-  --accent-foreground: oklch(0.35 0.08 240);
+  --accent: oklch(0.93 0.04 255);
+  --accent-foreground: oklch(0.35 0.12 255);
 
-  --destructive: oklch(0.6 0.22 27);
+  --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(1 0 0);
 
-  --success: oklch(0.65 0.15 150);
+  --success: oklch(0.62 0.16 150);
   --warning: oklch(0.78 0.15 75);
 
-  --border: oklch(0.9 0.005 250);
-  --input: oklch(0.9 0.005 250);
-  --ring: oklch(0.72 0.17 50);
+  --border: oklch(0.91 0.01 250);
+  --input: oklch(0.91 0.01 250);
+  --ring: oklch(0.48 0.18 255);
 
-  /* Tag chips: SO style soft blue */
-  --tag: oklch(0.93 0.03 230);
-  --tag-foreground: oklch(0.4 0.09 240);
+  /* Tag chip — soft blue */
+  --tag: oklch(0.94 0.04 255);
+  --tag-foreground: oklch(0.4 0.14 255);
 }
 
 @layer base {
