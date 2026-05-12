@@ -12,10 +12,10 @@ const nav = [
   { to: "/review-mon-hoc", icon: BookOpen, label: "Review môn học" },
   { to: "/review-giang-vien", icon: GraduationCap, label: "Review giảng viên" },
   { to: "/goc-tam-linh", icon: Flame, label: "Góc Tâm Linh" },
-  { to: "/tags", icon: Tag, label: "Tags" },
-  { to: "/sinh-vien", icon: Users, label: "Sinh viên" },
-  { to: "/vinh-danh", icon: Award, label: "Bảng vinh danh" },
-] as const;
+  { to: "#", icon: Tag, label: "Tags" },
+  { to: "#", icon: Users, label: "Sinh viên" },
+  { to: "#", icon: Award, label: "Bảng vinh danh" },
+];
 
 export function LeftSidebar() {
   const { pathname } = useLocation();
