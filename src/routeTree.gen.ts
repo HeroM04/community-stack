@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TaiLieuRouteImport } from './routes/tai-lieu'
+import { Route as ReviewMonHocRouteImport } from './routes/review-mon-hoc'
+import { Route as ReviewGiangVienRouteImport } from './routes/review-giang-vien'
+import { Route as PostsRouteImport } from './routes/posts'
+import { Route as GocTamLinhRouteImport } from './routes/goc-tam-linh'
+import { Route as DeThiRouteImport } from './routes/de-thi'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TaiLieuRoute = TaiLieuRouteImport.update({
+  id: '/tai-lieu',
+  path: '/tai-lieu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewMonHocRoute = ReviewMonHocRouteImport.update({
+  id: '/review-mon-hoc',
+  path: '/review-mon-hoc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewGiangVienRoute = ReviewGiangVienRouteImport.update({
+  id: '/review-giang-vien',
+  path: '/review-giang-vien',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostsRoute = PostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GocTamLinhRoute = GocTamLinhRouteImport.update({
+  id: '/goc-tam-linh',
+  path: '/goc-tam-linh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeThiRoute = DeThiRouteImport.update({
+  id: '/de-thi',
+  path: '/de-thi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/de-thi': typeof DeThiRoute
+  '/goc-tam-linh': typeof GocTamLinhRoute
+  '/posts': typeof PostsRoute
+  '/review-giang-vien': typeof ReviewGiangVienRoute
+  '/review-mon-hoc': typeof ReviewMonHocRoute
+  '/tai-lieu': typeof TaiLieuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/de-thi': typeof DeThiRoute
+  '/goc-tam-linh': typeof GocTamLinhRoute
+  '/posts': typeof PostsRoute
+  '/review-giang-vien': typeof ReviewGiangVienRoute
+  '/review-mon-hoc': typeof ReviewMonHocRoute
+  '/tai-lieu': typeof TaiLieuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/de-thi': typeof DeThiRoute
+  '/goc-tam-linh': typeof GocTamLinhRoute
+  '/posts': typeof PostsRoute
+  '/review-giang-vien': typeof ReviewGiangVienRoute
+  '/review-mon-hoc': typeof ReviewMonHocRoute
+  '/tai-lieu': typeof TaiLieuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/de-thi'
+    | '/goc-tam-linh'
+    | '/posts'
+    | '/review-giang-vien'
+    | '/review-mon-hoc'
+    | '/tai-lieu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/de-thi'
+    | '/goc-tam-linh'
+    | '/posts'
+    | '/review-giang-vien'
+    | '/review-mon-hoc'
+    | '/tai-lieu'
+  id:
+    | '__root__'
+    | '/'
+    | '/de-thi'
+    | '/goc-tam-linh'
+    | '/posts'
+    | '/review-giang-vien'
+    | '/review-mon-hoc'
+    | '/tai-lieu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DeThiRoute: typeof DeThiRoute
+  GocTamLinhRoute: typeof GocTamLinhRoute
+  PostsRoute: typeof PostsRoute
+  ReviewGiangVienRoute: typeof ReviewGiangVienRoute
+  ReviewMonHocRoute: typeof ReviewMonHocRoute
+  TaiLieuRoute: typeof TaiLieuRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tai-lieu': {
+      id: '/tai-lieu'
+      path: '/tai-lieu'
+      fullPath: '/tai-lieu'
+      preLoaderRoute: typeof TaiLieuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review-mon-hoc': {
+      id: '/review-mon-hoc'
+      path: '/review-mon-hoc'
+      fullPath: '/review-mon-hoc'
+      preLoaderRoute: typeof ReviewMonHocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review-giang-vien': {
+      id: '/review-giang-vien'
+      path: '/review-giang-vien'
+      fullPath: '/review-giang-vien'
+      preLoaderRoute: typeof ReviewGiangVienRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goc-tam-linh': {
+      id: '/goc-tam-linh'
+      path: '/goc-tam-linh'
+      fullPath: '/goc-tam-linh'
+      preLoaderRoute: typeof GocTamLinhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/de-thi': {
+      id: '/de-thi'
+      path: '/de-thi'
+      fullPath: '/de-thi'
+      preLoaderRoute: typeof DeThiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +177,23 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DeThiRoute: DeThiRoute,
+  GocTamLinhRoute: GocTamLinhRoute,
+  PostsRoute: PostsRoute,
+  ReviewGiangVienRoute: ReviewGiangVienRoute,
+  ReviewMonHocRoute: ReviewMonHocRoute,
+  TaiLieuRoute: TaiLieuRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
