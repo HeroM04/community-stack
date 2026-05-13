@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageLayout } from "@/components/universe/PageLayout";
+import { PageLayout } from "@/hooks/components/universe/PageLayout";
 import { ChevronUp, ChevronDown, Bookmark, Share2, Flag } from "lucide-react";
 
 export const Route = createFileRoute("/posts/$id")({

@@ -4,6 +4,7 @@ import {
   BookOpen,
   FileText,
   Flame,
+  Folder,
   GraduationCap,
   Home,
   MessageSquare,
@@ -19,6 +20,8 @@ const nav = [
   { to: "/review-giang-vien", icon: GraduationCap, label: "Review giảng viên" },
   { to: "/goc-tam-linh", icon: Flame, label: "Góc Tâm Linh" },
   { to: "/bang-vinh-danh", icon: Award, label: "Bảng vinh danh" },
+  { to: "/tai-lieu-mon-hoc", icon: Folder, label: "Tài liệu môn học" },
+
 ] as const;
 
 export function LeftSidebar() {

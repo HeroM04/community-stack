@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute, Link, useLocation } from "@tanstack/react-router";
-import { QuestionList } from "@/components/universe/QuestionList";
-import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
+import { QuestionList } from "@/hooks/components/universe/QuestionList";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/hooks/components/universe/PageLayout";
 import { useState } from "react";
 
 export const Route = createFileRoute("/posts")({

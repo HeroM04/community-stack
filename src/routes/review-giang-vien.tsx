@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/hooks/components/universe/PageLayout";
 import { Star } from "lucide-react";
 import { useState } from "react";
 

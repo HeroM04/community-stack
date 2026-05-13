@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TaiLieuMonHocRouteImport } from './routes/tai-lieu-mon-hoc'
 import { Route as TaiLieuRouteImport } from './routes/tai-lieu'
 import { Route as ReviewMonHocRouteImport } from './routes/review-mon-hoc'
 import { Route as ReviewGiangVienRouteImport } from './routes/review-giang-vien'
@@ -30,6 +31,11 @@ import { Route as PostsIdRouteImport } from './routes/posts.$id'
 import { Route as DeThiDangRouteImport } from './routes/de-thi.dang'
 import { Route as DeThiIdRouteImport } from './routes/de-thi.$id'
 
+const TaiLieuMonHocRoute = TaiLieuMonHocRouteImport.update({
+  id: '/tai-lieu-mon-hoc',
+  path: '/tai-lieu-mon-hoc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TaiLieuRoute = TaiLieuRouteImport.update({
   id: '/tai-lieu',
   path: '/tai-lieu',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/tai-lieu-mon-hoc': typeof TaiLieuMonHocRoute
   '/de-thi/$id': typeof DeThiIdRoute
   '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/tai-lieu-mon-hoc': typeof TaiLieuMonHocRoute
   '/de-thi/$id': typeof DeThiIdRoute
   '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
+  '/tai-lieu-mon-hoc': typeof TaiLieuMonHocRoute
   '/de-thi/$id': typeof DeThiIdRoute
   '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/tai-lieu-mon-hoc'
     | '/de-thi/$id'
     | '/de-thi/dang'
     | '/posts/$id'
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/tai-lieu-mon-hoc'
     | '/de-thi/$id'
     | '/de-thi/dang'
     | '/posts/$id'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
+    | '/tai-lieu-mon-hoc'
     | '/de-thi/$id'
     | '/de-thi/dang'
     | '/posts/$id'
@@ -278,10 +290,18 @@ export interface RootRouteChildren {
   ReviewGiangVienRoute: typeof ReviewGiangVienRouteWithChildren
   ReviewMonHocRoute: typeof ReviewMonHocRouteWithChildren
   TaiLieuRoute: typeof TaiLieuRouteWithChildren
+  TaiLieuMonHocRoute: typeof TaiLieuMonHocRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tai-lieu-mon-hoc': {
+      id: '/tai-lieu-mon-hoc'
+      path: '/tai-lieu-mon-hoc'
+      fullPath: '/tai-lieu-mon-hoc'
+      preLoaderRoute: typeof TaiLieuMonHocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tai-lieu': {
       id: '/tai-lieu'
       path: '/tai-lieu'
@@ -501,6 +521,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewGiangVienRoute: ReviewGiangVienRouteWithChildren,
   ReviewMonHocRoute: ReviewMonHocRouteWithChildren,
   TaiLieuRoute: TaiLieuRouteWithChildren,
+  TaiLieuMonHocRoute: TaiLieuMonHocRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

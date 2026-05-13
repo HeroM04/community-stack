@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Sparkles } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
-import { TopNav } from "@/components/universe/TopNav";
+import { TopNav } from "@/hooks/components/universe/TopNav";
 
 export const Route = createFileRoute("/goc-tam-linh")({
   component: SpiritualPage,

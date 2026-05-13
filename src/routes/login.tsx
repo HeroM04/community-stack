@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { TopNav } from "@/components/universe/TopNav";
+import { TopNav } from "@/hooks/components/universe/TopNav";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import logo from "@/assets/logo.png";
 
