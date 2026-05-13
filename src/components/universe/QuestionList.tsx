@@ -100,9 +100,7 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
           {/* Content */}
           <div className="flex-1 min-w-0">
             <h3 className="text-[17px] leading-snug font-medium">
-              <Link to="/posts/$id" params={{ id: String(p.id) }} className="text-foreground hover:text-primary">
-                {p.title}
-              </Link>
+              <span className="text-foreground hover:text-primary">{p.title}</span>
               {p.hot && (
                 <span className="ml-2 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full align-middle">
                   🔥 HOT
