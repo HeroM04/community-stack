@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
 import { BookOpen, Download, Star, Coins } from "lucide-react";
 
@@ -22,6 +22,12 @@ const docs = [
 ];
 
 function DocsPage() {
+  const location = useLocation();
+
+  if (location.pathname !== "/tai-lieu") {
+    return <Outlet />;
+  }
+
   return (
     <PageLayout>
       <PageHeader

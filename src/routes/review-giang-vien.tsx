@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
 import { Star, MessageSquare } from "lucide-react";
 
@@ -21,6 +21,12 @@ const teachers = [
 ];
 
 function TeacherReviewPage() {
+  const location = useLocation();
+
+  if (location.pathname !== "/review-giang-vien") {
+    return <Outlet />;
+  }
+
   return (
     <PageLayout>
       <PageHeader
