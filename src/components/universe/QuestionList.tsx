@@ -51,77 +51,93 @@ const defaultPosts: Post[] = [
     votes: 412, answers: 67, views: "8.7k",
     user: "ThỏCưng_0001", rep: "12.4k", time: "3 giờ trước", hot: true,
   },
-  {
-    id: 5,
-    title: "Cách đăng ký học phần khi server quá tải?",
-    excerpt: "Mỗi lần đăng ký học phần là server chết, mình ngồi F5 cả tiếng không vào nổi. Có ai có mẹo gì không...",
-    tags: ["đăng-ký-học", "mẹo", "kinh-nghiệm"],
-    votes: 31, answers: 4, views: "421",
-    user: "RùaChậm_8821", rep: "256", time: "5 giờ trước",
-  },
-  {
-    id: 6,
-    title: "Tổng hợp 50 đề thi cũ Lập trình C — từ K60 đến K68",
-    excerpt: "Mình mới ngồi scan lại toàn bộ kho đề của khoa, ai cần thì lấy. Free, không bán. Chỉ xin 1 upvote nếu thấy hữu ích...",
-    tags: ["lập-trình-c", "đề-thi", "miễn-phí"],
-    votes: 287, answers: 19, views: "12.1k",
-    user: "CodeNinja", rep: "8,921", time: "8 giờ trước", answered: true,
-  },
+
 ];
 
-export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
+export function QuestionList({
+  posts = defaultPosts,
+  searchQuery = "",
+  limit,
+  compact = false,
+}: {
+  posts?: Post[];
+  searchQuery?: string;
+  limit?: number;
+  compact?: boolean;
+}) {
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visiblePosts = normalizedQuery
+    ? posts.filter((post) =>
+        [
+          post.title,
+          post.excerpt,
+          post.user,
+          ...post.tags,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery),
+      )
+    : posts;
+
+  const displayedPosts = typeof limit === "number" ? visiblePosts.slice(0, limit) : visiblePosts;
+
   return (
-    <div className="space-y-3">
-      {posts.map(p => (
+    <div className={compact ? "space-y-2" : "space-y-2.5"}>
+      {visiblePosts.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
+          <p className="text-[14px] font-medium text-foreground">Khong tim thay bai post phu hop</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thu tim bang tu khoa khac.</p>
+        </div>
+      )}
+
+      {displayedPosts.map(p => (
         <Link
           key={p.id}
           to="/posts/$id"
           params={{ id: String(p.id) }}
-          className="flex gap-4 p-5 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-sm transition"
+          className={`${compact ? "gap-2.5 p-3" : "gap-3 p-4"} flex bg-surface border border-border rounded-xl hover:border-primary/40 hover:shadow-sm transition`}
         >
           {/* Stats column */}
-          <div className="hidden sm:flex flex-col items-center gap-2 w-[80px] shrink-0">
-            <div className="flex flex-col items-center leading-tight bg-muted rounded-xl px-3 py-1.5 min-w-[64px]">
-              <span className="text-[14px] font-semibold text-foreground">{p.votes}</span>
-              <span className="text-[10px] text-muted-foreground uppercase">votes</span>
+          <div className={`${compact ? "w-[48px] gap-1" : "w-[58px] gap-1.5"} hidden sm:flex flex-col items-center shrink-0`}>
+            <div className={`${compact ? "min-w-[44px] px-1.5 py-0.5" : "min-w-[52px] px-2 py-1"} flex flex-col items-center leading-tight bg-muted rounded-lg`}>
+              <span className={`${compact ? "text-[12px]" : "text-[13px]"} font-semibold text-foreground`}>{p.votes}</span>
+              <span className="text-[9px] text-muted-foreground uppercase">votes</span>
             </div>
-            <div className={`flex flex-col items-center leading-tight rounded-xl px-3 py-1.5 min-w-[64px] ${
+            <div className={`${compact ? "min-w-[44px] px-1.5 py-0.5" : "min-w-[52px] px-2 py-1"} flex flex-col items-center leading-tight rounded-lg ${
               p.answered ? "bg-success/10 text-success border border-success/30" : "bg-muted text-foreground"
             }`}>
-              <span className="text-[14px] font-semibold">{p.answers}</span>
-              <span className="text-[10px] uppercase opacity-80">answers</span>
+              <span className={`${compact ? "text-[12px]" : "text-[13px]"} font-semibold`}>{p.answers}</span>
+              <span className="text-[9px] uppercase opacity-80">answers</span>
             </div>
-            <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
-              <Eye className="h-3 w-3" />
+            <div className={`${compact ? "text-[9px]" : "text-[10px]"} flex items-center gap-1 text-muted-foreground`}>
+              <Eye className="h-2.5 w-2.5" />
               <span>{p.views} views</span>
             </div>
           </div>
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-[17px] leading-snug font-medium">
+            <h3 className={`${compact ? "text-[15px]" : "text-[16px]"} leading-snug font-medium`}>
               <span className="text-foreground hover:text-primary">{p.title}</span>
               {p.hot && (
-                <span className="ml-2 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full align-middle">
+                <span className="ml-2 inline-flex items-center gap-1 text-[10px] font-semibold text-brand-red bg-brand-red/10 px-1.5 py-0.5 rounded-full align-middle">
                   🔥 HOT
                 </span>
               )}
             </h3>
-            <p className="mt-1.5 text-[13px] text-muted-foreground line-clamp-2">{p.excerpt}</p>
+            <p className={`${compact ? "line-clamp-1" : "line-clamp-2"} mt-1 text-[13px] text-muted-foreground`}>{p.excerpt}</p>
 
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap gap-1.5">
+            <div className={`${compact ? "mt-2" : "mt-2.5"} flex flex-wrap items-center justify-between gap-2`}>
+              <div className="flex flex-wrap gap-1">
                 {p.tags.map(t => (
-                  <span key={t} className="text-[12px] px-2.5 py-1 bg-tag text-tag-foreground rounded-full hover:brightness-95 cursor-pointer">
+                  <span key={t} className="text-[11px] px-2 py-0.5 bg-tag text-tag-foreground rounded-full hover:brightness-95 cursor-pointer">
                     {t}
                   </span>
                 ))}
               </div>
-              <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
-                <div className="h-6 w-6 rounded-full bg-gradient-to-br from-brand-blue to-brand-red" />
+              <div className="text-[11px]">
                 <span className="text-primary font-medium">{p.user}</span>
-                <span className="font-semibold text-foreground">{p.rep}</span>
-                <span>· {p.time}</span>
               </div>
             </div>
           </div>

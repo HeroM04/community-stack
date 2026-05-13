@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
 import { Star, BookOpen, Users } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/review-mon-hoc")({
   component: CourseReviewPage,
@@ -23,6 +24,13 @@ const courses = [
 
 function CourseReviewPage() {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visibleCourses = normalizedQuery
+    ? courses.filter((course) =>
+        [course.code, course.name, course.tag].join(" ").toLowerCase().includes(normalizedQuery),
+      )
+    : courses;
 
   if (location.pathname !== "/review-mon-hoc") {
     return <Outlet />;
@@ -34,15 +42,18 @@ function CourseReviewPage() {
         title="Review môn học"
         subtitle="Đánh giá độ khó, khối lượng và mức độ hữu ích của từng môn."
         action={
-          <button className="px-4 h-10 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
+          <Link
+            to="/review-mon-hoc/viet"
+            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+          >
             + Viết review
-          </button>
+          </Link>
         }
       />
-      <FilterBar filters={["Tất cả", "Đánh giá cao", "Khó nhất", "Nhiều review"]} count="184 môn học" />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} count="184 môn học" placeholder="Tìm kiếm môn học..." />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {courses.map(c => (
+        {visibleCourses.map(c => (
           <Link
             key={c.id}
             to="/review-mon-hoc/$id"
@@ -76,6 +87,13 @@ function CourseReviewPage() {
           </Link>
         ))}
       </div>
+      {visibleCourses.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
+          <p className="text-[14px] font-medium text-foreground">Không tìm thấy môn học phù hợp</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thử tìm bằng từ khóa khác.</p>
+        </div>
+      )}
+      <Pagination />
     </PageLayout>
   );
 }

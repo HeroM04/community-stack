@@ -18,7 +18,7 @@ function PostDetailPage() {
         Có ai có đề thi cuối kỳ Giải tích 1 năm 2024 không ạ?
       </h1>
       <div className="mt-2 flex flex-wrap items-center gap-3 text-[12px] text-muted-foreground border-b border-border pb-3">
-        <span>Đăng <strong className="text-foreground">2 phút trước</strong></span>
+        
         <span>Xem <strong className="text-foreground">2,341</strong> lần</span>
         <span className="px-2 py-0.5 bg-brand-red/10 text-brand-red rounded-full font-semibold">🔥 HOT</span>
       </div>
@@ -48,7 +48,7 @@ function PostDetailPage() {
               <button className="flex items-center gap-1 hover:text-primary"><Bookmark className="h-3.5 w-3.5" />Lưu</button>
               <button className="flex items-center gap-1 hover:text-brand-red"><Flag className="h-3.5 w-3.5" />Báo cáo</button>
             </div>
-            <UserCard name="MèoLười_4782" rep="1,284" time="hỏi 2 phút trước" />
+            <UserCard name="MèoLười_4782"  />
           </div>
         </div>
       </div>
@@ -57,9 +57,9 @@ function PostDetailPage() {
       <h2 className="mt-10 text-[20px] font-semibold border-b border-border pb-2">8 trả lời</h2>
 
       {[
-        { id: "a1", body: "Mình có bộ đề 2022-2024 + đáp án. Đã upload trên Chợ Tài Liệu, miễn phí cho bạn. Link: <strong>/tai-lieu/12</strong>", votes: 87, accepted: true, user: "CodeNinja", rep: "8,921", time: "1 phút trước" },
-        { id: "a2", body: "Bạn ơi mình có file PDF đề 2024 chính chủ thầy gửi. Inbox nhé. Phần tích phân năm nay ra dạng từng phần khá nặng, ôn kỹ chương 4-5.", votes: 42, user: "GấuNgủ_1923", rep: "3,402", time: "30 phút trước" },
-        { id: "a3", body: "Mẹo nhỏ: học chắc bảng nguyên hàm cơ bản + 4 phương pháp đổi biến. Năm nào cũng có 1 câu vận dụng cao về chuỗi.", votes: 23, user: "ThỏCưng_0001", rep: "12.4k", time: "2 giờ trước" },
+        { id: "a1", body: "Mình có bộ đề 2022-2024 + đáp án. Đã upload trên Chợ Tài Liệu, miễn phí cho bạn. Link: <strong>/tai-lieu/12</strong>", votes: 87, accepted: true, user: "CodeNinja" },
+        { id: "a2", body: "Bạn ơi mình có file PDF đề 2024 chính chủ thầy gửi. Inbox nhé. Phần tích phân năm nay ra dạng từng phần khá nặng, ôn kỹ chương 4-5.", votes: 42, user: "GấuNgủ_1923" },
+        { id: "a3", body: "Mẹo nhỏ: học chắc bảng nguyên hàm cơ bản + 4 phương pháp đổi biến. Năm nào cũng có 1 câu vận dụng cao về chuỗi.", votes: 23, user: "ThỏCưng_0001" },
       ].map(a => (
         <div key={a.id} className="mt-5 flex gap-4 pb-5 border-b border-border">
           <VoteCol votes={a.votes} accepted={a.accepted} />
@@ -71,7 +71,7 @@ function PostDetailPage() {
             )}
             <div className="text-[14px] leading-relaxed" dangerouslySetInnerHTML={{ __html: a.body }} />
             <div className="mt-3 flex justify-end">
-              <UserCard name={a.user} rep={a.rep} time={`trả lời ${a.time}`} />
+              <UserCard name={a.user} />
             </div>
           </div>
         </div>
@@ -105,14 +105,14 @@ function VoteCol({ votes, accepted, saved }: { votes: number; accepted?: boolean
   );
 }
 
-function UserCard({ name, rep, time }: { name: string; rep: string; time: string }) {
+function UserCard({ name }: { name: string }) {
   return (
     <div className="bg-accent/50 rounded-xl p-2.5 flex items-center gap-2 text-[12px]">
-      <div className="text-muted-foreground">{time}</div>
+      
       <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-blue to-brand-red" />
       <div className="leading-tight">
         <div className="text-primary font-medium">{name}</div>
-        <div className="text-foreground font-semibold">{rep}</div>
+        
       </div>
     </div>
   );

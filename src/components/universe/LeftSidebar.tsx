@@ -12,8 +12,7 @@ const nav = [
   { to: "/review-mon-hoc", icon: BookOpen, label: "Review môn học" },
   { to: "/review-giang-vien", icon: GraduationCap, label: "Review giảng viên" },
   { to: "/goc-tam-linh", icon: Flame, label: "Góc Tâm Linh" },
-  { to: "#", icon: Tag, label: "Tags" },
-  { to: "#", icon: Users, label: "Sinh viên" },
+
   { to: "#", icon: Award, label: "Bảng vinh danh" },
 ];
 
@@ -42,19 +41,7 @@ export function LeftSidebar() {
           );
         })}
 
-        <div className="mt-4 px-3 text-[11px] uppercase tracking-wide text-muted-foreground font-semibold">
-          Môn nổi bật
-        </div>
-        <ul className="mt-1">
-          {["Giải tích 1", "Lập trình C", "Vật lý đại cương", "Triết học", "Tiếng Anh 2"].map(s => (
-            <li key={s}>
-              <a href="#" className="flex items-center gap-2 px-3 py-1.5 text-foreground hover:bg-muted rounded-r-full">
-                <Star className="h-3.5 w-3.5 text-warning" />
-                <span className="truncate">{s}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        
       </nav>
     </aside>
   );

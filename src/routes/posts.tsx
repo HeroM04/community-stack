@@ -1,6 +1,7 @@
-import { Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
+import { Outlet, createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { QuestionList } from "@/components/universe/QuestionList";
-import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
+import { useState } from "react";
 
 export const Route = createFileRoute("/posts")({
   component: PostsPage,
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/posts")({
 
 function PostsPage() {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
   if (location.pathname !== "/posts") {
     return <Outlet />;
@@ -25,13 +27,17 @@ function PostsPage() {
         title="Bài post"
         subtitle="Đặt câu hỏi, chia sẻ kinh nghiệm với cộng đồng."
         action={
-          <button className="px-4 h-10 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
+          <Link
+            to="/posts/new"
+            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+          >
             + Đăng bài mới
-          </button>
+          </Link>
         }
       />
-      <FilterBar filters={["Mới nhất", "Hot", "Tuần này", "Chưa trả lời"]} count="28,492 bài post" />
-      <QuestionList />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} count="28,492 bài post" placeholder="Tìm kiếm bài post..." />
+      <QuestionList searchQuery={searchQuery} />
+      <Pagination />
     </PageLayout>
   );
 }

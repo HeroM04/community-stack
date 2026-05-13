@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
 import { BookOpen, Download, Star, Coins } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/tai-lieu")({
   component: DocsPage,
@@ -23,6 +24,13 @@ const docs = [
 
 function DocsPage() {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visibleDocs = normalizedQuery
+    ? docs.filter((doc) =>
+        [doc.title, doc.subject, doc.seller].join(" ").toLowerCase().includes(normalizedQuery),
+      )
+    : docs;
 
   if (location.pathname !== "/tai-lieu") {
     return <Outlet />;
@@ -34,52 +42,62 @@ function DocsPage() {
         title="Chợ Tài Liệu"
         subtitle="Mua bán, trao đổi tài liệu học tập bằng Universe Coins."
         action={
-          <button className="px-4 h-10 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
+          <Link
+            to="/tai-lieu/dang"
+            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+          >
             + Đăng tài liệu
-          </button>
+          </Link>
         }
       />
-      <FilterBar filters={["Tất cả", "Miễn phí", "Trả phí", "Bán chạy", "Đánh giá cao"]} count="1,284 tài liệu" />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} count="1,284 tài liệu" placeholder="Tìm kiếm tài liệu..." />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {docs.map(d => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+        {visibleDocs.map(d => (
           <Link
             key={d.id}
             to="/tai-lieu/$id"
             params={{ id: String(d.id) }}
-            className="block bg-surface border border-border rounded-2xl overflow-hidden hover:border-primary/40 hover:shadow-sm transition"
+            className="block bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/40 hover:shadow-sm transition"
           >
-            <div className="aspect-[16/8] bg-gradient-to-br from-accent via-surface to-tag flex items-center justify-center">
-              <BookOpen className="h-12 w-12 text-primary/60" />
+            <div className="h-24 bg-gradient-to-br from-accent via-surface to-tag flex items-center justify-center">
+              <BookOpen className="h-8 w-8 text-primary/60" />
             </div>
-            <div className="p-5">
-              <h3 className="font-semibold text-foreground line-clamp-2 leading-snug">{d.title}</h3>
-              <div className="mt-2 flex items-center gap-2 text-[12px] text-muted-foreground">
+            <div className="p-3.5">
+              <h3 className="min-h-[40px] text-[14px] font-semibold leading-5 text-foreground line-clamp-2">{d.title}</h3>
+              <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
                 <span className="px-2 py-0.5 bg-tag text-tag-foreground rounded-full">{d.subject}</span>
                 <span>{d.pages} trang</span>
               </div>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="flex items-center gap-1 text-[12px]">
-                  <Star className="h-3.5 w-3.5 text-warning fill-warning" />
+              <div className="mt-2.5 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1 text-[11px]">
+                  <Star className="h-3 w-3 text-warning fill-warning" />
                   <span className="font-semibold">{d.rating}</span>
                   <span className="text-muted-foreground">· {d.sold} đã bán</span>
                 </div>
                 {d.free ? (
-                  <span className="text-[13px] font-semibold text-success">Miễn phí</span>
+                  <span className="text-[12px] font-semibold text-success">Miễn phí</span>
                 ) : (
-                  <span className="flex items-center gap-1 text-[13px] font-semibold text-brand-red">
-                    <Coins className="h-3.5 w-3.5" /> {d.price}
+                  <span className="flex items-center gap-1 text-[12px] font-semibold text-brand-red">
+                    <Coins className="h-3 w-3" /> {d.price}
                   </span>
                 )}
               </div>
-              <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-[12px] text-muted-foreground">
+              <div className="mt-2.5 pt-2.5 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
                 <span>Bởi <span className="text-primary font-medium">{d.seller}</span></span>
-                <span className="flex items-center gap-1"><Download className="h-3.5 w-3.5" />{d.sold}</span>
+                <span className="flex items-center gap-1"><Download className="h-3 w-3" />{d.sold}</span>
               </div>
             </div>
           </Link>
         ))}
       </div>
+      {visibleDocs.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
+          <p className="text-[14px] font-medium text-foreground">Không tìm thấy tài liệu phù hợp</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thử tìm bằng từ khóa khác.</p>
+        </div>
+      )}
+      <Pagination />
     </PageLayout>
   );
 }

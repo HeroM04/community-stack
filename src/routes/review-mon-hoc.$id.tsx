@@ -31,7 +31,12 @@ function CourseDetailPage() {
               <span className="text-muted-foreground">· Tỉ lệ pass: 78%</span>
             </div>
           </div>
-          <button className="px-4 h-10 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">+ Viết review</button>
+          <Link
+            to="/review-mon-hoc/viet"
+            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+          >
+            + Viết review
+          </Link>
         </div>
 
         <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">

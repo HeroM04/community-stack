@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
 import { FileText, Download, Eye } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/de-thi")({
   component: ExamsPage,
@@ -23,6 +24,16 @@ const exams = [
 
 function ExamsPage() {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visibleExams = normalizedQuery
+    ? exams.filter((exam) =>
+        [exam.subject, exam.year, exam.semester, exam.type, exam.uploader]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery),
+      )
+    : exams;
 
   if (location.pathname !== "/de-thi") {
     return <Outlet />;
@@ -34,15 +45,18 @@ function ExamsPage() {
         title="Đề thi cũ"
         subtitle="Kho đề thi của các khóa trước — miễn phí, có đáp án tham khảo."
         action={
-          <button className="px-4 h-10 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
+          <Link
+            to="/de-thi/dang"
+            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+          >
             + Tải đề lên
-          </button>
+          </Link>
         }
       />
-      <FilterBar filters={["Mới nhất", "Tải nhiều", "Có đáp án", "Theo khoa"]} count="2,481 đề thi" />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} count="2,481 đề thi" placeholder="Tìm kiếm đề thi..." />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {exams.map(e => (
+        {visibleExams.map(e => (
           <Link
             key={e.id}
             to="/de-thi/$id"
@@ -77,6 +91,13 @@ function ExamsPage() {
           </Link>
         ))}
       </div>
+      {visibleExams.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
+          <p className="text-[14px] font-medium text-foreground">Không tìm thấy đề thi phù hợp</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thử tìm bằng từ khóa khác.</p>
+        </div>
+      )}
+      <Pagination />
     </PageLayout>
   );
 }

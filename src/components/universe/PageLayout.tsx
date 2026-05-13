@@ -1,6 +1,7 @@
 import { TopNav } from "./TopNav";
 import { LeftSidebar } from "./LeftSidebar";
 import { RightSidebar } from "./RightSidebar";
+import { Search } from "lucide-react";
 
 export function PageLayout({
   children,
@@ -14,7 +15,7 @@ export function PageLayout({
       <TopNav />
       <div className="mx-auto flex max-w-[1264px]">
         <LeftSidebar />
-        <main className="flex-1 min-w-0 px-5 py-6 border-x border-border bg-background">
+        <main className="flex-1 min-w-0 px-5 py-4 border-x border-border bg-background">
           {children}
         </main>
         {showRightSidebar && <RightSidebar />}
@@ -70,39 +71,65 @@ export function PageHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start justify-between gap-3 flex-wrap mb-4">
-      <div>
-        <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
-        {subtitle && <p className="mt-1 text-[13px] text-muted-foreground">{subtitle}</p>}
+    <div className="mb-3 flex items-start justify-between gap-3 border-b border-border/70 pb-3">
+      <div className="flex min-w-0 items-start gap-2.5">
+        <div className="mt-1 h-8 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-brand-blue to-brand-red" />
+        <div className="min-w-0">
+          <h1 className="text-[24px] font-semibold leading-tight text-foreground">{title}</h1>
+          {subtitle && (
+            <p className="mt-1 max-w-2xl text-[13px] leading-5 text-muted-foreground">
+              {subtitle}
+            </p>
+          )}
+        </div>
       </div>
-      {action}
+      <div className="shrink-0">{action}</div>
     </div>
   );
 }
 
-export function FilterBar({
-  filters,
-  active = 0,
+export function SearchBar({
+  value,
+  onChange,
+  placeholder = "Tìm kiếm...",
   count,
 }: {
-  filters: string[];
-  active?: number;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
   count?: string;
 }) {
   return (
-    <div className="mb-4 flex items-center justify-between gap-3 flex-wrap">
+    <div className="mb-3 flex items-center justify-between gap-3 flex-wrap">
       {count && <p className="text-[13px] text-muted-foreground">{count}</p>}
-      <div className="flex border border-border rounded-full overflow-hidden text-[13px] bg-surface">
-        {filters.map((f, i) => (
+      <div className="relative flex-1 min-w-[240px] max-w-[520px]">
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+        <input
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          type="search"
+          placeholder={placeholder}
+          className="h-9 w-full rounded-full border border-border bg-surface pl-8 pr-4 text-[13px] text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-primary/15"
+        />
+      </div>
+    </div>
+  );
+}
+
+export function Pagination() {
+  return (
+    <div className="mt-6 flex items-center justify-between text-[13px]">
+      <div className="flex gap-1">
+        {["1", "2", "3", "4", "5", "...", "1898", "Sau"].map((n, i) => (
           <button
-            key={f}
-            className={`px-4 py-1.5 ${
-              i === active
-                ? "bg-primary text-primary-foreground font-medium"
-                : "text-foreground hover:bg-muted"
-            } ${i !== 0 ? "border-l border-border" : ""}`}
+            key={i}
+            className={`min-w-[32px] h-8 px-2.5 rounded-full border ${
+              i === 0
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-surface border-border hover:bg-muted text-foreground"
+            }`}
           >
-            {f}
+            {n}
           </button>
         ))}
       </div>

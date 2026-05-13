@@ -22,12 +22,7 @@ export function TopNav() {
         </nav>
 
         <div className="relative flex-1 max-w-[760px] mx-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Tìm môn học, giảng viên, tài liệu, bài post..."
-            className="w-full h-10 pl-9 pr-3 text-[13px] bg-surface border border-border rounded-full focus:outline-none focus:ring-3 focus:ring-accent focus:border-primary/40"
-          />
+          
         </div>
 
         <div className="flex items-center gap-1">

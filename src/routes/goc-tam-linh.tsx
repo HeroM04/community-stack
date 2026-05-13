@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
 import { Flame, Heart, MessageCircle } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/goc-tam-linh")({
   component: SpiritualPage,
@@ -21,6 +22,14 @@ const prayers = [
 ];
 
 function SpiritualPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const visiblePrayers = normalizedQuery
+    ? prayers.filter((prayer) =>
+        [prayer.user, prayer.subject, prayer.text].join(" ").toLowerCase().includes(normalizedQuery),
+      )
+    : prayers;
+
   return (
     <PageLayout>
       <PageHeader
@@ -32,10 +41,10 @@ function SpiritualPage() {
           </button>
         }
       />
-      <FilterBar filters={["Mới nhất", "Hot", "Linh nhất", "Đã pass"]} count="2,103 lời cầu" />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} count="2,103 lời cầu" placeholder="Tìm kiếm lời cầu..." />
 
       <div className="space-y-3">
-        {prayers.map(p => (
+        {visiblePrayers.map(p => (
           <article
             key={p.id}
             className="bg-surface border border-border rounded-2xl p-5 hover:border-brand-red/40 hover:shadow-sm transition"
@@ -68,6 +77,13 @@ function SpiritualPage() {
           </article>
         ))}
       </div>
+      {visiblePrayers.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
+          <p className="text-[14px] font-medium text-foreground">Không tìm thấy lời cầu phù hợp</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thử tìm bằng từ khóa khác.</p>
+        </div>
+      )}
+      <Pagination />
     </PageLayout>
   );
 }
