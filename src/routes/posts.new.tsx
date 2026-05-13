@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageLayout, PageHeader, Card } from "@/hooks/components/universe/PageLayout";
+import { PageLayout, PageHeader, Card } from "@/components/universe/PageLayout";
 import { Bold, Italic, Link2, Code, Image as ImageIcon, List, Quote } from "lucide-react";
 
 export const Route = createFileRoute("/posts/new")({ component: NewPostPage });

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageLayout } from "@/hooks/components/universe/PageLayout";
+import { PageLayout } from "@/components/universe/PageLayout";
 import { Download, Eye, FileText, Calendar, User, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/de-thi/$id")({

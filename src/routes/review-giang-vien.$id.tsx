@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageLayout } from "@/hooks/components/universe/PageLayout";
+import { PageLayout } from "@/components/universe/PageLayout";
 import { Star, ThumbsUp, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/review-giang-vien/$id")({

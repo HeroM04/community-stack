@@ -9,7 +9,7 @@ import {
   MessageSquare,
   TrendingUp,
 } from "lucide-react";
-import { Card, PageHeader, PageLayout } from "@/hooks/components/universe/PageLayout";
+import { Card, PageHeader, PageLayout } from "@/components/universe/PageLayout";
 
 export const Route = createFileRoute("/bang-vinh-danh")({
   component: HallOfFamePage,

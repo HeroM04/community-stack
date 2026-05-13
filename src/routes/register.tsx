@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { TopNav } from "@/hooks/components/universe/TopNav";
+import { TopNav } from "@/components/universe/TopNav";
 import logo from "@/assets/logo.png";
 import { User, Mail, Lock, GraduationCap } from "lucide-react";
 
