@@ -31,12 +31,6 @@ function CourseDetailPage() {
               <span className="text-muted-foreground">· Tỉ lệ pass: 78%</span>
             </div>
           </div>
-          <Link
-            to="/review-mon-hoc/viet"
-            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
-          >
-            + Viết review
-          </Link>
         </div>
 
         <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -94,7 +88,15 @@ function CourseDetailPage() {
       </div>
 
       {/* Reviews */}
-      <h2 className="mt-8 text-[18px] font-semibold mb-3">Review chi tiết</h2>
+      <div className="mt-8 mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-[18px] font-semibold">Review chi tiết</h2>
+        <Link
+          to="/review-mon-hoc/viet"
+          className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
+        >
+          + Viết review
+        </Link>
+      </div>
       <div className="space-y-3">
         {[
           { user: "CodeNinja", rep: "8,921", time: "1 tuần trước", rating: 5, text: "Môn xương sống của ngành CNTT. Học chăm là pass dễ. Đầu tư thời gian xứng đáng.", likes: 87, semester: "HK2 2023-2024" },

@@ -17,6 +17,7 @@ import { Route as PostsRouteImport } from './routes/posts'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GocTamLinhRouteImport } from './routes/goc-tam-linh'
 import { Route as DeThiRouteImport } from './routes/de-thi'
+import { Route as BangVinhDanhRouteImport } from './routes/bang-vinh-danh'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TaiLieuDangRouteImport } from './routes/tai-lieu.dang'
 import { Route as TaiLieuIdRouteImport } from './routes/tai-lieu.$id'
@@ -67,6 +68,11 @@ const GocTamLinhRoute = GocTamLinhRouteImport.update({
 const DeThiRoute = DeThiRouteImport.update({
   id: '/de-thi',
   path: '/de-thi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BangVinhDanhRoute = BangVinhDanhRouteImport.update({
+  id: '/bang-vinh-danh',
+  path: '/bang-vinh-danh',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -127,6 +133,7 @@ const DeThiIdRoute = DeThiIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bang-vinh-danh': typeof BangVinhDanhRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
   '/login': typeof LoginRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bang-vinh-danh': typeof BangVinhDanhRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
   '/login': typeof LoginRoute
@@ -170,6 +178,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bang-vinh-danh': typeof BangVinhDanhRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
   '/login': typeof LoginRoute
@@ -193,6 +202,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/bang-vinh-danh'
     | '/de-thi'
     | '/goc-tam-linh'
     | '/login'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/bang-vinh-danh'
     | '/de-thi'
     | '/goc-tam-linh'
     | '/login'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/bang-vinh-danh'
     | '/de-thi'
     | '/goc-tam-linh'
     | '/login'
@@ -257,6 +269,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BangVinhDanhRoute: typeof BangVinhDanhRoute
   DeThiRoute: typeof DeThiRouteWithChildren
   GocTamLinhRoute: typeof GocTamLinhRoute
   LoginRoute: typeof LoginRoute
@@ -323,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/de-thi'
       fullPath: '/de-thi'
       preLoaderRoute: typeof DeThiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bang-vinh-danh': {
+      id: '/bang-vinh-danh'
+      path: '/bang-vinh-danh'
+      fullPath: '/bang-vinh-danh'
+      preLoaderRoute: typeof BangVinhDanhRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -472,6 +492,7 @@ const TaiLieuRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BangVinhDanhRoute: BangVinhDanhRoute,
   DeThiRoute: DeThiRouteWithChildren,
   GocTamLinhRoute: GocTamLinhRoute,
   LoginRoute: LoginRoute,

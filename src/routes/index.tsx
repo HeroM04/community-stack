@@ -36,12 +36,17 @@ function Index() {
         title="Universe APD"
         subtitle="Hỏi đáp, tài liệu, đề thi và review học tập của cộng đồng sinh viên APD."
         action={
-          <Link
-            to="/posts/new"
-            className="px-4 h-10 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110"
-          >
-            + Đăng bài mới
-          </Link>
+         <Link
+
+        to="/bang-vinh-danh"
+
+        className="mt-3 inline-flex h-8 items-center rounded-full bg-foreground px-3 text-[12px] font-medium text-background hover:opacity-90"
+
+      >
+
+        Xem bảng vinh danh
+
+      </Link>
         }
       />
       <section>

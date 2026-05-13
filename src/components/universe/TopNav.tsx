@@ -32,9 +32,9 @@ export function TopNav() {
           <button className="p-2 rounded-full hover:bg-muted text-muted-foreground" aria-label="Inbox">
             <Inbox className="h-[18px] w-[18px]" />
           </button>
-          <button className="p-2 rounded-full hover:bg-muted text-muted-foreground" aria-label="Achievements">
+          <Link to="/bang-vinh-danh" className="p-2 rounded-full hover:bg-muted text-muted-foreground" aria-label="Achievements">
             <Trophy className="h-[18px] w-[18px]" />
-          </button>
+          </Link>
           <Link to="/login" className="ml-2 px-3 h-9 inline-flex items-center text-[13px] font-medium border border-primary/30 text-primary bg-accent rounded-full hover:bg-accent/70">
             Đăng nhập
           </Link>
