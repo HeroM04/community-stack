@@ -73,8 +73,10 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
   return (
     <div className="space-y-3">
       {posts.map(p => (
-        <article
+        <Link
           key={p.id}
+          to="/posts/$id"
+          params={{ id: String(p.id) }}
           className="flex gap-4 p-5 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-sm transition"
         >
           {/* Stats column */}
