@@ -131,7 +131,7 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
             <span>▲ {p.votes}</span>
             <span className="flex items-center gap-1"><MessageSquare className="h-3 w-3" />{p.answers}</span>
           </div>
-        </article>
+        </Link>
       ))}
     </div>
   );
