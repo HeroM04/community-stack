@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
 import { Star, BookOpen, Users } from "lucide-react";
 
@@ -22,6 +22,12 @@ const courses = [
 ];
 
 function CourseReviewPage() {
+  const location = useLocation();
+
+  if (location.pathname !== "/review-mon-hoc") {
+    return <Outlet />;
+  }
+
   return (
     <PageLayout>
       <PageHeader
