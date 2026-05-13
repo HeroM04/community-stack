@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
 import { QuestionList } from "@/components/universe/QuestionList";
 import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
 
@@ -13,6 +13,12 @@ export const Route = createFileRoute("/posts")({
 });
 
 function PostsPage() {
+  const location = useLocation();
+
+  if (location.pathname !== "/posts") {
+    return <Outlet />;
+  }
+
   return (
     <PageLayout>
       <PageHeader
