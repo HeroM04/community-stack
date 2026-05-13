@@ -12,14 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TaiLieuRouteImport } from './routes/tai-lieu'
 import { Route as ReviewMonHocRouteImport } from './routes/review-mon-hoc'
 import { Route as ReviewGiangVienRouteImport } from './routes/review-giang-vien'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PostsRouteImport } from './routes/posts'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as GocTamLinhRouteImport } from './routes/goc-tam-linh'
 import { Route as DeThiRouteImport } from './routes/de-thi'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TaiLieuDangRouteImport } from './routes/tai-lieu.dang'
 import { Route as TaiLieuIdRouteImport } from './routes/tai-lieu.$id'
+import { Route as ReviewMonHocVietRouteImport } from './routes/review-mon-hoc.viet'
 import { Route as ReviewMonHocIdRouteImport } from './routes/review-mon-hoc.$id'
+import { Route as ReviewGiangVienVietRouteImport } from './routes/review-giang-vien.viet'
 import { Route as ReviewGiangVienIdRouteImport } from './routes/review-giang-vien.$id'
+import { Route as PostsNewRouteImport } from './routes/posts.new'
 import { Route as PostsIdRouteImport } from './routes/posts.$id'
+import { Route as DeThiDangRouteImport } from './routes/de-thi.dang'
 import { Route as DeThiIdRouteImport } from './routes/de-thi.$id'
 
 const TaiLieuRoute = TaiLieuRouteImport.update({
@@ -37,9 +44,19 @@ const ReviewGiangVienRoute = ReviewGiangVienRouteImport.update({
   path: '/review-giang-vien',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsRoute = PostsRouteImport.update({
   id: '/posts',
   path: '/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GocTamLinhRoute = GocTamLinhRouteImport.update({
@@ -57,25 +74,50 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TaiLieuDangRoute = TaiLieuDangRouteImport.update({
+  id: '/dang',
+  path: '/dang',
+  getParentRoute: () => TaiLieuRoute,
+} as any)
 const TaiLieuIdRoute = TaiLieuIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TaiLieuRoute,
+} as any)
+const ReviewMonHocVietRoute = ReviewMonHocVietRouteImport.update({
+  id: '/viet',
+  path: '/viet',
+  getParentRoute: () => ReviewMonHocRoute,
 } as any)
 const ReviewMonHocIdRoute = ReviewMonHocIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => ReviewMonHocRoute,
 } as any)
+const ReviewGiangVienVietRoute = ReviewGiangVienVietRouteImport.update({
+  id: '/viet',
+  path: '/viet',
+  getParentRoute: () => ReviewGiangVienRoute,
+} as any)
 const ReviewGiangVienIdRoute = ReviewGiangVienIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => ReviewGiangVienRoute,
 } as any)
+const PostsNewRoute = PostsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => PostsRoute,
+} as any)
 const PostsIdRoute = PostsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => PostsRoute,
+} as any)
+const DeThiDangRoute = DeThiDangRouteImport.update({
+  id: '/dang',
+  path: '/dang',
+  getParentRoute: () => DeThiRoute,
 } as any)
 const DeThiIdRoute = DeThiIdRouteImport.update({
   id: '/$id',
@@ -87,44 +129,65 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
+  '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
+  '/register': typeof RegisterRoute
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
   '/de-thi/$id': typeof DeThiIdRoute
+  '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
+  '/posts/new': typeof PostsNewRoute
   '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-giang-vien/viet': typeof ReviewGiangVienVietRoute
   '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/review-mon-hoc/viet': typeof ReviewMonHocVietRoute
   '/tai-lieu/$id': typeof TaiLieuIdRoute
+  '/tai-lieu/dang': typeof TaiLieuDangRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
+  '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
+  '/register': typeof RegisterRoute
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
   '/de-thi/$id': typeof DeThiIdRoute
+  '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
+  '/posts/new': typeof PostsNewRoute
   '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-giang-vien/viet': typeof ReviewGiangVienVietRoute
   '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/review-mon-hoc/viet': typeof ReviewMonHocVietRoute
   '/tai-lieu/$id': typeof TaiLieuIdRoute
+  '/tai-lieu/dang': typeof TaiLieuDangRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/de-thi': typeof DeThiRouteWithChildren
   '/goc-tam-linh': typeof GocTamLinhRoute
+  '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
+  '/register': typeof RegisterRoute
   '/review-giang-vien': typeof ReviewGiangVienRouteWithChildren
   '/review-mon-hoc': typeof ReviewMonHocRouteWithChildren
   '/tai-lieu': typeof TaiLieuRouteWithChildren
   '/de-thi/$id': typeof DeThiIdRoute
+  '/de-thi/dang': typeof DeThiDangRoute
   '/posts/$id': typeof PostsIdRoute
+  '/posts/new': typeof PostsNewRoute
   '/review-giang-vien/$id': typeof ReviewGiangVienIdRoute
+  '/review-giang-vien/viet': typeof ReviewGiangVienVietRoute
   '/review-mon-hoc/$id': typeof ReviewMonHocIdRoute
+  '/review-mon-hoc/viet': typeof ReviewMonHocVietRoute
   '/tai-lieu/$id': typeof TaiLieuIdRoute
+  '/tai-lieu/dang': typeof TaiLieuDangRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -132,50 +195,73 @@ export interface FileRouteTypes {
     | '/'
     | '/de-thi'
     | '/goc-tam-linh'
+    | '/login'
     | '/posts'
+    | '/register'
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
     | '/de-thi/$id'
+    | '/de-thi/dang'
     | '/posts/$id'
+    | '/posts/new'
     | '/review-giang-vien/$id'
+    | '/review-giang-vien/viet'
     | '/review-mon-hoc/$id'
+    | '/review-mon-hoc/viet'
     | '/tai-lieu/$id'
+    | '/tai-lieu/dang'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/de-thi'
     | '/goc-tam-linh'
+    | '/login'
     | '/posts'
+    | '/register'
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
     | '/de-thi/$id'
+    | '/de-thi/dang'
     | '/posts/$id'
+    | '/posts/new'
     | '/review-giang-vien/$id'
+    | '/review-giang-vien/viet'
     | '/review-mon-hoc/$id'
+    | '/review-mon-hoc/viet'
     | '/tai-lieu/$id'
+    | '/tai-lieu/dang'
   id:
     | '__root__'
     | '/'
     | '/de-thi'
     | '/goc-tam-linh'
+    | '/login'
     | '/posts'
+    | '/register'
     | '/review-giang-vien'
     | '/review-mon-hoc'
     | '/tai-lieu'
     | '/de-thi/$id'
+    | '/de-thi/dang'
     | '/posts/$id'
+    | '/posts/new'
     | '/review-giang-vien/$id'
+    | '/review-giang-vien/viet'
     | '/review-mon-hoc/$id'
+    | '/review-mon-hoc/viet'
     | '/tai-lieu/$id'
+    | '/tai-lieu/dang'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DeThiRoute: typeof DeThiRouteWithChildren
   GocTamLinhRoute: typeof GocTamLinhRoute
+  LoginRoute: typeof LoginRoute
   PostsRoute: typeof PostsRouteWithChildren
+  RegisterRoute: typeof RegisterRoute
   ReviewGiangVienRoute: typeof ReviewGiangVienRouteWithChildren
   ReviewMonHocRoute: typeof ReviewMonHocRouteWithChildren
   TaiLieuRoute: typeof TaiLieuRouteWithChildren
@@ -204,11 +290,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewGiangVienRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts': {
       id: '/posts'
       path: '/posts'
       fullPath: '/posts'
       preLoaderRoute: typeof PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/goc-tam-linh': {
@@ -232,12 +332,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tai-lieu/dang': {
+      id: '/tai-lieu/dang'
+      path: '/dang'
+      fullPath: '/tai-lieu/dang'
+      preLoaderRoute: typeof TaiLieuDangRouteImport
+      parentRoute: typeof TaiLieuRoute
+    }
     '/tai-lieu/$id': {
       id: '/tai-lieu/$id'
       path: '/$id'
       fullPath: '/tai-lieu/$id'
       preLoaderRoute: typeof TaiLieuIdRouteImport
       parentRoute: typeof TaiLieuRoute
+    }
+    '/review-mon-hoc/viet': {
+      id: '/review-mon-hoc/viet'
+      path: '/viet'
+      fullPath: '/review-mon-hoc/viet'
+      preLoaderRoute: typeof ReviewMonHocVietRouteImport
+      parentRoute: typeof ReviewMonHocRoute
     }
     '/review-mon-hoc/$id': {
       id: '/review-mon-hoc/$id'
@@ -246,6 +360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewMonHocIdRouteImport
       parentRoute: typeof ReviewMonHocRoute
     }
+    '/review-giang-vien/viet': {
+      id: '/review-giang-vien/viet'
+      path: '/viet'
+      fullPath: '/review-giang-vien/viet'
+      preLoaderRoute: typeof ReviewGiangVienVietRouteImport
+      parentRoute: typeof ReviewGiangVienRoute
+    }
     '/review-giang-vien/$id': {
       id: '/review-giang-vien/$id'
       path: '/$id'
@@ -253,12 +374,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewGiangVienIdRouteImport
       parentRoute: typeof ReviewGiangVienRoute
     }
+    '/posts/new': {
+      id: '/posts/new'
+      path: '/new'
+      fullPath: '/posts/new'
+      preLoaderRoute: typeof PostsNewRouteImport
+      parentRoute: typeof PostsRoute
+    }
     '/posts/$id': {
       id: '/posts/$id'
       path: '/$id'
       fullPath: '/posts/$id'
       preLoaderRoute: typeof PostsIdRouteImport
       parentRoute: typeof PostsRoute
+    }
+    '/de-thi/dang': {
+      id: '/de-thi/dang'
+      path: '/dang'
+      fullPath: '/de-thi/dang'
+      preLoaderRoute: typeof DeThiDangRouteImport
+      parentRoute: typeof DeThiRoute
     }
     '/de-thi/$id': {
       id: '/de-thi/$id'
@@ -272,30 +407,36 @@ declare module '@tanstack/react-router' {
 
 interface DeThiRouteChildren {
   DeThiIdRoute: typeof DeThiIdRoute
+  DeThiDangRoute: typeof DeThiDangRoute
 }
 
 const DeThiRouteChildren: DeThiRouteChildren = {
   DeThiIdRoute: DeThiIdRoute,
+  DeThiDangRoute: DeThiDangRoute,
 }
 
 const DeThiRouteWithChildren = DeThiRoute._addFileChildren(DeThiRouteChildren)
 
 interface PostsRouteChildren {
   PostsIdRoute: typeof PostsIdRoute
+  PostsNewRoute: typeof PostsNewRoute
 }
 
 const PostsRouteChildren: PostsRouteChildren = {
   PostsIdRoute: PostsIdRoute,
+  PostsNewRoute: PostsNewRoute,
 }
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
 interface ReviewGiangVienRouteChildren {
   ReviewGiangVienIdRoute: typeof ReviewGiangVienIdRoute
+  ReviewGiangVienVietRoute: typeof ReviewGiangVienVietRoute
 }
 
 const ReviewGiangVienRouteChildren: ReviewGiangVienRouteChildren = {
   ReviewGiangVienIdRoute: ReviewGiangVienIdRoute,
+  ReviewGiangVienVietRoute: ReviewGiangVienVietRoute,
 }
 
 const ReviewGiangVienRouteWithChildren = ReviewGiangVienRoute._addFileChildren(
@@ -304,10 +445,12 @@ const ReviewGiangVienRouteWithChildren = ReviewGiangVienRoute._addFileChildren(
 
 interface ReviewMonHocRouteChildren {
   ReviewMonHocIdRoute: typeof ReviewMonHocIdRoute
+  ReviewMonHocVietRoute: typeof ReviewMonHocVietRoute
 }
 
 const ReviewMonHocRouteChildren: ReviewMonHocRouteChildren = {
   ReviewMonHocIdRoute: ReviewMonHocIdRoute,
+  ReviewMonHocVietRoute: ReviewMonHocVietRoute,
 }
 
 const ReviewMonHocRouteWithChildren = ReviewMonHocRoute._addFileChildren(
@@ -316,10 +459,12 @@ const ReviewMonHocRouteWithChildren = ReviewMonHocRoute._addFileChildren(
 
 interface TaiLieuRouteChildren {
   TaiLieuIdRoute: typeof TaiLieuIdRoute
+  TaiLieuDangRoute: typeof TaiLieuDangRoute
 }
 
 const TaiLieuRouteChildren: TaiLieuRouteChildren = {
   TaiLieuIdRoute: TaiLieuIdRoute,
+  TaiLieuDangRoute: TaiLieuDangRoute,
 }
 
 const TaiLieuRouteWithChildren =
@@ -329,7 +474,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DeThiRoute: DeThiRouteWithChildren,
   GocTamLinhRoute: GocTamLinhRoute,
+  LoginRoute: LoginRoute,
   PostsRoute: PostsRouteWithChildren,
+  RegisterRoute: RegisterRoute,
   ReviewGiangVienRoute: ReviewGiangVienRouteWithChildren,
   ReviewMonHocRoute: ReviewMonHocRouteWithChildren,
   TaiLieuRoute: TaiLieuRouteWithChildren,

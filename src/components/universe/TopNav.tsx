@@ -40,12 +40,12 @@ export function TopNav() {
           <button className="p-2 rounded-full hover:bg-muted text-muted-foreground" aria-label="Achievements">
             <Trophy className="h-[18px] w-[18px]" />
           </button>
-          <button className="ml-2 px-3 h-9 text-[13px] font-medium border border-primary/30 text-primary bg-accent rounded-full hover:bg-accent/70">
+          <Link to="/login" className="ml-2 px-3 h-9 inline-flex items-center text-[13px] font-medium border border-primary/30 text-primary bg-accent rounded-full hover:bg-accent/70">
             Đăng nhập
-          </button>
-          <button className="px-3 h-9 text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
+          </Link>
+          <Link to="/register" className="px-3 h-9 inline-flex items-center text-[13px] font-medium bg-brand-red text-primary-foreground rounded-full hover:brightness-110">
             Đăng ký
-          </button>
+          </Link>
         </div>
       </div>
     </header>
