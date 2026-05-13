@@ -73,8 +73,10 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
   return (
     <div className="space-y-3">
       {posts.map(p => (
-        <article
+        <Link
           key={p.id}
+          to="/posts/$id"
+          params={{ id: String(p.id) }}
           className="flex gap-4 p-5 bg-surface border border-border rounded-2xl hover:border-primary/40 hover:shadow-sm transition"
         >
           {/* Stats column */}
@@ -98,9 +100,7 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
           {/* Content */}
           <div className="flex-1 min-w-0">
             <h3 className="text-[17px] leading-snug font-medium">
-              <Link to="/posts/$id" params={{ id: String(p.id) }} className="text-foreground hover:text-primary">
-                {p.title}
-              </Link>
+              <span className="text-foreground hover:text-primary">{p.title}</span>
               {p.hot && (
                 <span className="ml-2 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full align-middle">
                   🔥 HOT
@@ -131,7 +131,7 @@ export function QuestionList({ posts = defaultPosts }: { posts?: Post[] }) {
             <span>▲ {p.votes}</span>
             <span className="flex items-center gap-1"><MessageSquare className="h-3 w-3" />{p.answers}</span>
           </div>
-        </article>
+        </Link>
       ))}
     </div>
   );
