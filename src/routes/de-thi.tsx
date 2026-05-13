@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { PageLayout, PageHeader, FilterBar } from "@/components/universe/PageLayout";
 import { FileText, Download, Eye } from "lucide-react";
 
@@ -22,6 +22,12 @@ const exams = [
 ];
 
 function ExamsPage() {
+  const location = useLocation();
+
+  if (location.pathname !== "/de-thi") {
+    return <Outlet />;
+  }
+
   return (
     <PageLayout>
       <PageHeader
