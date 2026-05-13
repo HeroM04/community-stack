@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Folder, ChevronRight } from "lucide-react";
-import { PageLayout, PageHeader, Pagination, SearchBar } from "@/components/universe/PageLayout";
+import { PageLayout, PageHeader, Pagination } from "@/components/universe/PageLayout";
+import { useState } from "react";
+
 
 export const Route = createFileRoute("/tai-lieu-mon-hoc")({
   component: DocumentPage,
@@ -257,7 +259,7 @@ function ForumRow({ title, badge, badgeColor, subjects, stats, latestPost }: For
             {subjects.map((code) => (
               <Link
                 key={code}
-                to="#"
+                to="/tai-lieu"
                 className="flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-primary hover:underline transition-colors"
               >
                 <Folder className="h-3.5 w-3.5 text-primary/70" />
@@ -286,7 +288,7 @@ function ForumRow({ title, badge, badgeColor, subjects, stats, latestPost }: For
             <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold text-white whitespace-nowrap ${latestPost.tagColor}`}>
               {latestPost.tag}
             </span>
-            <Link to="#" className="text-[13px] font-medium text-foreground hover:text-primary hover:underline truncate transition-colors">
+            <Link to="/tai-lieu" className="text-[13px] font-medium text-foreground hover:text-primary hover:underline truncate transition-colors">
               {latestPost.title}
             </Link>
           </div>
