@@ -21,15 +21,15 @@ const nav = [
   { to: "/goc-tam-linh", icon: Flame, label: "Góc Tâm Linh" },
   { to: "/bang-vinh-danh", icon: Award, label: "Bảng vinh danh" },
   { to: "/tai-lieu-mon-hoc", icon: Folder, label: "Tài liệu môn học" },
-
 ] as const;
 
 export function LeftSidebar() {
   const { pathname } = useLocation();
 
   return (
-    <aside className="hidden lg:block w-[180px] shrink-0 border-r border-border">
-      <nav className="py-4 pr-2 text-[13px]">
+    // Đã xóa "hidden lg:block" và sửa thành "w-full md:w-[180px]" để tương thích cả trên PC lẫn menu trượt Mobile
+    <aside className="w-full md:w-[180px] shrink-0 md:border-r border-border h-full flex flex-col">
+      <nav className="py-4 md:pr-2 text-[13px] flex-1">
         {nav.map((item) => {
           const active = pathname === item.to;
 
@@ -37,14 +37,14 @@ export function LeftSidebar() {
             <Link
               key={item.label}
               to={item.to}
-              className={`flex items-center gap-2 px-3 py-2 my-0.5 rounded-r-full ${
+              className={`flex items-center gap-3 px-4 md:px-3 py-3 md:py-2 my-0.5 md:rounded-r-full rounded-lg md:rounded-l-none transition-colors ${
                 active
-                  ? "bg-accent font-semibold border-r-[3px] border-primary text-primary"
+                  ? "bg-accent font-semibold md:border-r-[3px] border-primary text-primary"
                   : "text-foreground hover:bg-muted"
               }`}
             >
-              <item.icon className={`h-4 w-4 ${active ? "text-primary" : "text-muted-foreground"}`} />
-              {item.label}
+              <item.icon className={`h-4 w-4 md:h-4 md:w-4 ${active ? "text-primary" : "text-muted-foreground"}`} />
+              <span className="text-[14px] md:text-[13px]">{item.label}</span>
             </Link>
           );
         })}

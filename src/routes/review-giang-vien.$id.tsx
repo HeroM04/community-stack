@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { PageLayout } from "@/components/universe/PageLayout";
-import { Star, ThumbsUp, MessageCircle } from "lucide-react";
+import { Star, ThumbsUp, MessageCircle, ChevronLeft } from "lucide-react";
 
 export const Route = createFileRoute("/review-giang-vien/$id")({
   component: TeacherDetailPage,
@@ -8,11 +8,23 @@ export const Route = createFileRoute("/review-giang-vien/$id")({
 
 function TeacherDetailPage() {
   const { id } = Route.useParams();
+  const router = useRouter(); // Khởi tạo router
+
   return (
     <PageLayout>
-      <nav className="text-[13px] text-muted-foreground mb-3">
-        <Link to="/review-giang-vien" className="hover:text-primary">Review giảng viên</Link> <span className="mx-1">/</span> <span>#{id}</span>
-      </nav>
+      {/* Thêm Flex container bao bọc nút Back và Nav */}
+      <div className="flex items-center gap-3 mb-3">
+        <button 
+          onClick={() => router.history.back()}
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/60 text-muted-foreground hover:bg-accent hover:text-foreground transition shadow-sm"
+          title="Quay lại"
+        >
+          <ChevronLeft className="h-5 w-5 -ml-0.5" />
+        </button>
+        <nav className="text-[13px] text-muted-foreground">
+          <Link to="/review-giang-vien" className="hover:text-primary">Review giảng viên</Link> <span className="mx-1">/</span> <span>#{id}</span>
+        </nav>
+      </div>
 
       {/* Header */}
       <div className="bg-surface border border-border rounded-2xl p-6">

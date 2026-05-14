@@ -1,4 +1,4 @@
-import { Eye, MessageSquare } from "lucide-react";
+import { MessageSquare, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 export type Post = {
@@ -8,7 +8,7 @@ export type Post = {
   tags: string[];
   votes: number;
   answers: number;
-  views: string;
+  views: string; // Vẫn giữ trong type để không lỗi data cũ, nhưng sẽ không render ra UI
   user: string;
   rep: string;
   time: string;
@@ -51,7 +51,6 @@ const defaultPosts: Post[] = [
     votes: 412, answers: 67, views: "8.7k",
     user: "ThỏCưng_0001", rep: "12.4k", time: "3 giờ trước", hot: true,
   },
-
 ];
 
 export function QuestionList({
@@ -83,71 +82,76 @@ export function QuestionList({
   const displayedPosts = typeof limit === "number" ? visiblePosts.slice(0, limit) : visiblePosts;
 
   return (
-    <div className={compact ? "space-y-2" : "space-y-2.5"}>
+    <div className={compact ? "space-y-3" : "space-y-4"}>
       {visiblePosts.length === 0 && (
         <div className="rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
-          <p className="text-[14px] font-medium text-foreground">Khong tim thay bai post phu hop</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">Thu tim bang tu khoa khac.</p>
+          <p className="text-[14px] font-medium text-foreground">Không tìm thấy bài post phù hợp</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Thử tìm bằng từ khóa khác.</p>
         </div>
       )}
 
       {displayedPosts.map(p => (
-        <Link
+        <div
           key={p.id}
-          to="/posts/$id"
-          params={{ id: String(p.id) }}
-          className={`${compact ? "gap-2.5 p-3" : "gap-3 p-4"} flex bg-surface border border-border rounded-xl hover:border-primary/40 hover:shadow-sm transition`}
+          className={`${compact ? "p-4" : "p-5"} bg-surface border border-border rounded-xl hover:border-primary/40 hover:shadow-sm transition`}
         >
-          {/* Stats column */}
-          <div className={`${compact ? "w-[48px] gap-1" : "w-[58px] gap-1.5"} hidden sm:flex flex-col items-center shrink-0`}>
-            <div className={`${compact ? "min-w-[44px] px-1.5 py-0.5" : "min-w-[52px] px-2 py-1"} flex flex-col items-center leading-tight bg-muted rounded-lg`}>
-              <span className={`${compact ? "text-[12px]" : "text-[13px]"} font-semibold text-foreground`}>{p.votes}</span>
-              <span className="text-[9px] text-muted-foreground uppercase">votes</span>
-            </div>
-            <div className={`${compact ? "min-w-[44px] px-1.5 py-0.5" : "min-w-[52px] px-2 py-1"} flex flex-col items-center leading-tight rounded-lg ${
-              p.answered ? "bg-success/10 text-success border border-success/30" : "bg-muted text-foreground"
-            }`}>
-              <span className={`${compact ? "text-[12px]" : "text-[13px]"} font-semibold`}>{p.answers}</span>
-              <span className="text-[9px] uppercase opacity-80">answers</span>
-            </div>
-            <div className={`${compact ? "text-[9px]" : "text-[10px]"} flex items-center gap-1 text-muted-foreground`}>
-              <Eye className="h-2.5 w-2.5" />
-              <span>{p.views} views</span>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <h3 className={`${compact ? "text-[15px]" : "text-[16px]"} leading-snug font-medium`}>
-              <span className="text-foreground hover:text-primary">{p.title}</span>
-              {p.hot && (
-                <span className="ml-2 inline-flex items-center gap-1 text-[10px] font-semibold text-brand-red bg-brand-red/10 px-1.5 py-0.5 rounded-full align-middle">
-                  🔥 HOT
-                </span>
-              )}
-            </h3>
-            <p className={`${compact ? "line-clamp-1" : "line-clamp-2"} mt-1 text-[13px] text-muted-foreground`}>{p.excerpt}</p>
-
-            <div className={`${compact ? "mt-2" : "mt-2.5"} flex flex-wrap items-center justify-between gap-2`}>
-              <div className="flex flex-wrap gap-1">
-                {p.tags.map(t => (
-                  <span key={t} className="text-[11px] px-2 py-0.5 bg-tag text-tag-foreground rounded-full hover:brightness-95 cursor-pointer">
-                    {t}
+          {/* Header Card: Tiêu đề + Trạng thái HOT */}
+          <div className="flex items-start justify-between gap-4 mb-2">
+            <Link to="/posts/$id" params={{ id: String(p.id) }} className="flex-1 min-w-0">
+              <h3 className={`${compact ? "text-[16px]" : "text-[18px]"} font-semibold leading-snug text-foreground hover:text-primary transition`}>
+                {p.title}
+                {p.hot && (
+                  <span className="ml-2 inline-flex items-center gap-1 text-[10px] font-bold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full align-middle">
+                    🔥 HOT
                   </span>
-                ))}
-              </div>
-              <div className="text-[11px]">
-                <span className="text-primary font-medium">{p.user}</span>
-              </div>
-            </div>
+                )}
+              </h3>
+            </Link>
           </div>
 
-          {/* Mobile stats */}
-          <div className="sm:hidden flex flex-col items-end gap-1 text-[11px] text-muted-foreground">
-            <span>▲ {p.votes}</span>
-            <span className="flex items-center gap-1"><MessageSquare className="h-3 w-3" />{p.answers}</span>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {p.tags.map(t => (
+              <span key={t} className="text-[11px] px-2 py-0.5 bg-accent text-muted-foreground font-medium rounded-md cursor-pointer hover:bg-border transition">
+                {t}
+              </span>
+            ))}
           </div>
-        </Link>
+
+          {/* Nội dung thu gọn */}
+          <p className={`${compact ? "line-clamp-2" : "line-clamp-3"} text-[14px] text-muted-foreground mb-4`}>
+            {p.excerpt}
+          </p>
+
+          {/* Footer Card: Tương tác + User (Tách biệt 2 bên) */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-border/50 text-[13px] font-medium text-muted-foreground">
+            
+            {/* Cụm Tương tác */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1 bg-accent/40 rounded-full px-2 py-1 border border-border/60">
+                <button className="flex items-center gap-1 hover:text-primary transition p-1"><ThumbsUp className="h-4 w-4" /> {p.votes}</button>
+                <div className="w-[1px] h-3 bg-border mx-1"></div>
+                <button className="flex items-center gap-1 hover:text-brand-red transition p-1"><ThumbsDown className="h-4 w-4" /></button>
+              </div>
+              
+              <Link to="/posts/$id" params={{ id: String(p.id) }} className="flex items-center gap-1.5 hover:text-foreground transition">
+                <MessageSquare className="h-4 w-4" />
+                <span>{p.answers} Bình luận</span>
+              </Link>
+            </div>
+
+            {/* Cụm Thông tin User */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[12px]">Bởi</span>
+              {/* Tên người dùng được làm đậm */}
+              <Link to="#" className="font-bold text-primary hover:underline">
+                {p.user}
+              </Link>
+             
+            </div>
+
+          </div>
+        </div>
       ))}
     </div>
   );

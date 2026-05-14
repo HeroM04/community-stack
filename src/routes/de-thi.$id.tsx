@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { PageLayout } from "@/components/universe/PageLayout";
-import { Download, Eye, FileText, Calendar, User, CheckCircle2 } from "lucide-react";
+import { Download, Eye, FileText, Calendar, User, CheckCircle2, ChevronLeft } from "lucide-react";
 
 export const Route = createFileRoute("/de-thi/$id")({
   component: ExamDetailPage,
@@ -8,11 +8,22 @@ export const Route = createFileRoute("/de-thi/$id")({
 
 function ExamDetailPage() {
   const { id } = Route.useParams();
+  const router = useRouter(); // Khởi tạo router
   return (
     <PageLayout>
-      <nav className="text-[13px] text-muted-foreground mb-3">
-        <Link to="/de-thi" className="hover:text-primary">Đề thi cũ</Link> <span className="mx-1">/</span> <span>Đề #{id}</span>
-      </nav>
+      {/* Chỉ bọc thêm thẻ div flex để đặt nút Back nằm ngang với nav */}
+      <div className="flex items-center gap-3 mb-3">
+        <button 
+          onClick={() => router.history.back()}
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/60 text-muted-foreground hover:bg-accent hover:text-foreground transition shadow-sm"
+          title="Quay lại"
+        >
+          <ChevronLeft className="h-5 w-5 -ml-0.5" />
+        </button>
+        <nav className="text-[13px] text-muted-foreground">
+          <Link to="/de-thi" className="hover:text-primary">Đề thi cũ</Link> <span className="mx-1">/</span> <span>Đề #{id}</span>
+        </nav>
+      </div>
 
       <div className="bg-surface border border-border rounded-2xl overflow-hidden">
         <div className="p-6 bg-gradient-to-br from-accent via-surface to-tag border-b border-border">

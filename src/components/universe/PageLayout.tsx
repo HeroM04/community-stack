@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { LeftSidebar } from "./LeftSidebar";
 import { RightSidebar } from "./RightSidebar";
 import { TopNav } from "./TopNav";
@@ -11,24 +12,68 @@ export function PageLayout({
   children: React.ReactNode;
   showRightSidebar?: boolean;
 }) {
+  // State quản lý việc mở Sidebar trên Mobile/Chia đôi màn hình
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-background">
-      <TopNav />
-      <div className="mx-auto flex max-w-[1264px]">
-        <LeftSidebar />
+    <div className="min-h-screen bg-background flex flex-col relative">
+      {/* Truyền hàm mở menu vào TopNav */}
+      <TopNav onMenuClick={() => setIsMobileMenuOpen(true)} />
+      
+      <div className="mx-auto flex max-w-[1264px] w-full flex-1">
+        {/* LeftSidebar gốc (Bị ẩn trên màn hình nhỏ) */}
+        <div className="hidden md:block">
+          <LeftSidebar />
+        </div>
+
         <main className="flex-1 min-w-0 border-x border-border bg-background px-5 py-4">
           {children}
         </main>
-        {showRightSidebar && <RightSidebar />}
+        
+        {showRightSidebar && (
+          <div className="hidden lg:block">
+            <RightSidebar />
+          </div>
+        )}
       </div>
+      
       <Footer />
+
+      {/* --- MOBILE MENU DRAWER (Hiện ra khi chia đôi màn hình) --- */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 flex md:hidden">
+          {/* Lớp nền tối mờ, bấm vào đây để đóng menu */}
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+            onClick={() => setIsMobileMenuOpen(false)} 
+          />
+          
+          {/* Sidebar trượt từ trái sang */}
+          <div className="relative w-[280px] bg-background h-full shadow-2xl flex flex-col animate-in slide-in-from-left-full duration-200">
+            <div className="p-4 border-b border-border flex justify-between items-center bg-surface">
+              <span className="font-bold text-primary text-[15px]">Menu</span>
+              <button 
+                onClick={() => setIsMobileMenuOpen(false)} 
+                className="p-1.5 bg-accent/80 hover:bg-accent rounded-full text-muted-foreground transition"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            {/* Tái sử dụng LeftSidebar vào đây, ép nó hiển thị 100% width */}
+            <div className="flex-1 overflow-y-auto p-2 [&>div]:flex [&>div]:w-full [&>div]:min-h-0">
+              <LeftSidebar />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 function Footer() {
   return (
-    <footer className="mt-10 bg-foreground text-background">
+    <footer className="mt-auto bg-foreground text-background">
       <div className="mx-auto grid max-w-[1264px] grid-cols-2 gap-6 px-4 py-8 text-[13px] md:grid-cols-4">
         <div>
           <div className="mb-2 font-semibold text-brand-red">UNIVERSE APD</div>

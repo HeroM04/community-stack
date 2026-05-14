@@ -1,22 +1,42 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { PageLayout, PageHeader, Card } from "@/components/universe/PageLayout";
-import { UploadCloud, FileText, X } from "lucide-react";
+import { UploadCloud, FileText, X, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/de-thi/dang")({ component: UploadExamPage });
 
 function UploadExamPage() {
   const [files, setFiles] = useState<{ name: string; size: string }[]>([]);
+  const router = useRouter(); // Khởi tạo router để dùng hàm back()
+
   return (
     <PageLayout showRightSidebar={false}>
+      
+      {/* --- NÚT QUAY LẠI & BREADCRUMB --- */}
+      <div className="flex items-center gap-3 mb-2">
+        <button 
+          onClick={() => router.history.back()}
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/60 text-muted-foreground hover:bg-accent hover:text-foreground transition shadow-sm"
+          title="Quay lại danh sách đề thi"
+        >
+          <ChevronLeft className="h-5 w-5 -ml-0.5" />
+        </button>
+        <nav className="text-[13px] text-muted-foreground font-medium">
+          <Link to="/de-thi" className="hover:text-primary transition">Đề thi cũ</Link> 
+          <span className="mx-2 text-border/80">/</span> 
+          <span className="text-foreground">Tải đề lên</span>
+        </nav>
+      </div>
+
       <PageHeader title="Tải đề thi lên" subtitle="Đóng góp đề cũ — giúp khoá sau ôn thi đỡ khổ." />
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5">
+      
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 mt-2">
         <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
           <Card>
-            <h3 className="font-semibold text-[14px] mb-2">File đề thi</h3>
-            <label className="block border-2 border-dashed border-border rounded-2xl p-8 text-center hover:bg-muted/50 cursor-pointer">
-              <UploadCloud className="h-10 w-10 mx-auto text-brand-red" />
-              <p className="mt-2 text-[14px] font-medium">Kéo thả ảnh/PDF của đề vào đây</p>
+            <h3 className="font-semibold text-[14px] mb-3 text-foreground">File đề thi</h3>
+            <label className="block border-2 border-dashed border-border bg-surface rounded-2xl p-8 text-center hover:bg-accent/50 hover:border-primary/50 transition cursor-pointer group">
+              <UploadCloud className="h-10 w-10 mx-auto text-brand-red group-hover:scale-110 transition-transform duration-300" />
+              <p className="mt-3 text-[14px] font-medium text-foreground">Kéo thả ảnh/PDF của đề vào đây</p>
               <p className="text-[12px] text-muted-foreground mt-1">Có thể tải nhiều ảnh nếu chụp từng trang</p>
               <input
                 type="file"
@@ -30,15 +50,19 @@ function UploadExamPage() {
               />
             </label>
             {files.length > 0 && (
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-4 space-y-2">
                 {files.map((f, i) => (
-                  <li key={i} className="flex items-center justify-between p-3 bg-background border border-border rounded-xl">
-                    <div className="flex items-center gap-2 text-[13px]">
-                      <FileText className="h-4 w-4 text-brand-red" />
-                      <span className="font-medium">{f.name}</span>
-                      <span className="text-muted-foreground">· {f.size}</span>
+                  <li key={i} className="flex items-center justify-between p-3 bg-accent/40 border border-border rounded-xl shadow-sm">
+                    <div className="flex items-center gap-3 text-[13px] min-w-0">
+                      <div className="p-2 bg-surface rounded-lg shrink-0">
+                        <FileText className="h-4 w-4 text-brand-red" />
+                      </div>
+                      <div className="truncate">
+                        <span className="font-semibold text-foreground">{f.name}</span>
+                        <span className="text-muted-foreground ml-2">· {f.size}</span>
+                      </div>
                     </div>
-                    <button type="button" onClick={() => setFiles(files.filter((_, j) => j !== i))} className="p-1 hover:bg-muted rounded">
+                    <button type="button" onClick={() => setFiles(files.filter((_, j) => j !== i))} className="p-1.5 hover:bg-brand-red/10 hover:text-brand-red text-muted-foreground rounded-md transition shrink-0 ml-2">
                       <X className="h-4 w-4" />
                     </button>
                   </li>
@@ -47,12 +71,12 @@ function UploadExamPage() {
             )}
           </Card>
 
-          <Card className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+          <Card className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field label="Tên môn" placeholder="Giải tích 2" />
               <Field label="Mã môn" placeholder="MATH121" />
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Select label="Học kỳ" options={["HK1", "HK2", "HK Hè"]} />
               <Select label="Năm học" options={["2024-2025","2023-2024","2022-2023","2021-2022"]} />
               <Select label="Loại đề" options={["Cuối kỳ", "Giữa kỳ", "Quiz", "Đề mẫu"]} />
@@ -62,31 +86,31 @@ function UploadExamPage() {
             <Field label="Ghi chú" textarea placeholder="Đề khó/dễ, mẹo làm bài, dạng câu hỏi..." />
           </Card>
 
-          <Card>
-            <h3 className="font-semibold text-[14px] mb-3">Tuỳ chọn nâng cao</h3>
-            <div className="space-y-2 text-[13px]">
-              <label className="flex items-center gap-2"><input type="checkbox" /> Có đáp án đính kèm</label>
-              <label className="flex items-center gap-2"><input type="checkbox" /> Đề được scan, chất lượng rõ</label>
-              <label className="flex items-center gap-2"><input type="checkbox" defaultChecked /> Cho phép cộng đồng bình luận</label>
-              <label className="flex items-center gap-2"><input type="checkbox" /> Đăng ẩn danh</label>
-            </div>
-          </Card>
-
-          <div className="flex justify-end gap-2">
-            <Link to="/de-thi" className="px-5 h-10 inline-flex items-center border border-border rounded-full text-[13px] hover:bg-muted">Huỷ</Link>
-            <button className="px-5 h-10 bg-brand-red text-primary-foreground rounded-full text-[13px] font-medium hover:brightness-110">
+          <div className="flex justify-end gap-3 pt-2">
+            <Link to="/de-thi" className="px-5 h-10 inline-flex items-center border border-border rounded-full text-[13px] hover:bg-muted transition">
+              Huỷ
+            </Link>
+            <button className="px-6 h-10 bg-[#dc2626] text-white rounded-full text-[13px] font-bold hover:bg-[#b91c1c] transition shadow-sm">
               Tải đề lên
             </button>
           </div>
         </form>
 
-        <aside className="space-y-3">
-          <Card className="!p-4">
-            <h3 className="font-semibold text-[14px] mb-2">Phần thưởng</h3>
-            <ul className="text-[12.5px] text-muted-foreground space-y-1.5 list-disc pl-4">
-              <li>+50 xu khi đề được duyệt.</li>
-              <li>+10 xu mỗi 100 lượt tải.</li>
-              <li>Huy hiệu "Người đóng góp" sau 5 đề.</li>
+        <aside className="space-y-4 mt-1 lg:mt-0">
+          <Card className="!p-5 bg-gradient-to-br from-surface to-accent/30">
+            <h3 className="font-bold text-[15px] mb-3 text-foreground flex items-center gap-2">
+              🎁 Phần thưởng
+            </h3>
+            <ul className="text-[13px] text-muted-foreground space-y-2.5 list-none">
+              <li className="flex items-start gap-2">
+                <span className="text-brand-red font-bold">✨</span> +50 xu khi đề được duyệt.
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-brand-red font-bold">✨</span> +10 xu mỗi 100 lượt tải.
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-brand-red font-bold">✨</span> Huy hiệu "Người đóng góp" sau 5 đề.
+              </li>
             </ul>
           </Card>
         </aside>
@@ -98,11 +122,11 @@ function UploadExamPage() {
 function Field({ label, textarea, ...props }: any) {
   return (
     <div>
-      <label className="block text-[13px] font-medium mb-1">{label}</label>
+      <label className="block text-[13px] font-medium mb-1.5 text-foreground">{label}</label>
       {textarea ? (
-        <textarea {...props} rows={3} className="w-full px-4 py-2 text-[13px] bg-background border border-border rounded-xl focus:outline-none focus:ring-3 focus:ring-accent" />
+        <textarea {...props} rows={3} className="w-full px-4 py-3 text-[13px] bg-surface border border-border rounded-xl focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition resize-y" />
       ) : (
-        <input {...props} className="w-full h-10 px-4 text-[13px] bg-background border border-border rounded-full focus:outline-none focus:ring-3 focus:ring-accent" />
+        <input {...props} className="w-full h-10 px-4 text-[13px] bg-surface border border-border rounded-full focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition" />
       )}
     </div>
   );
@@ -111,8 +135,8 @@ function Field({ label, textarea, ...props }: any) {
 function Select({ label, options }: { label: string; options: string[] }) {
   return (
     <div>
-      <label className="block text-[13px] font-medium mb-1">{label}</label>
-      <select className="w-full h-10 px-3 text-[13px] bg-background border border-border rounded-full">
+      <label className="block text-[13px] font-medium mb-1.5 text-foreground">{label}</label>
+      <select className="w-full h-10 px-3 text-[13px] bg-surface border border-border rounded-full focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition cursor-pointer appearance-none">
         {options.map((o) => <option key={o}>{o}</option>)}
       </select>
     </div>

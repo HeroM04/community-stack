@@ -1,16 +1,32 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { PageLayout, PageHeader, Card } from "@/components/universe/PageLayout";
-import { UploadCloud, FileText, X } from "lucide-react";
+import { UploadCloud, FileText, X, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/tai-lieu/dang")({ component: UploadDocPage });
 
 function UploadDocPage() {
+  const router = useRouter(); // Khởi tạo router
   const [files, setFiles] = useState<{ name: string; size: string }[]>([
     { name: "Slide_GiaiTich2_Chuong3.pdf", size: "2.4 MB" },
   ]);
   return (
     <PageLayout showRightSidebar={false}>
+      
+      {/* Thêm Flex container bao bọc nút Back và Nav */}
+      <div className="flex items-center gap-3 mb-3">
+        <button 
+          onClick={() => router.history.back()}
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/60 text-muted-foreground hover:bg-accent hover:text-foreground transition shadow-sm"
+          title="Quay lại"
+        >
+          <ChevronLeft className="h-5 w-5 -ml-0.5" />
+        </button>
+        <nav className="text-[13px] text-muted-foreground">
+          <Link to="/tai-lieu" className="hover:text-primary">Chợ Tài Liệu</Link> <span className="mx-1">/</span> <span>Đăng tài liệu</span>
+        </nav>
+      </div>
+
       <PageHeader title="Đăng tài liệu mới" subtitle="Chia sẻ slide, bài giảng, tóm tắt — kiếm xu APD." />
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5">
         <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
